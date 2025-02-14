@@ -48,6 +48,53 @@ class DataBaseConnect:
         except psycopg2.Error as e:
             db_logger.error(f"Error connecting to database: {e}")
 
+    def execute_query(
+        self, query: str, params: Optional[Tuple[Any, ...]] = None
+    ) -> List[Tuple]:
+        """
+        Executes a SQL query and fetches results if applicable.
+
+        :param query: SQL query string.
+        :param params: Optional tuple of parameters.
+        :return: List of tuples containing query results.
+        """
+        try:
+            self.cursor.execute(query, params or ())
+            if query.strip().lower().startswith("select"):
+                results = self.cursor.fetchall()
+                db_logger.info(f"Executed SELECT query: {query}")
+                # Return results if it's a SELECT query
+                return results
+            # Commit transaction for INSERT, UPDATE, DELETE
+            self.conn.commit()
+            db_logger.info(f"Executed query: {query} with params {params}")
+        except psycopg2.Error as e:
+            db_logger.error(
+                f"Error executing query: {e} | Query: {query} | Params: {params}"
+            )
+            self.conn.rollback()
+        return []
+
+    def insert_event(self, event_name: str, event_date: str, event_time: str):
+        """
+        Inserts a new event into the database.
+        """
+        query = """
+        INSERT INTO events (event_name, event_date, event_time)
+        VALUES (%s, %s, %s);
+        """
+        self.execute_query(query, (event_name, event_date, event_time))
+        db_logger.info(f"Inserted event: {event_name} on {event_date}")
+
+    def fetch_events(self) -> List[Tuple]:
+        """
+        Retrieves all events from the database.
+        """
+        query = "SELECT * FROM events;"
+        results = self.execute_query(query)
+        db_logger.info(f"Fetched {len(results)} events from database.")
+        return results
+
     def close(self):
         """
         Closes the database connection.
@@ -59,6 +106,9 @@ class DataBaseConnect:
             db_logger.info("Database connection closed.")
 
 
-admin = DataBaseConnect("itstime_db", "admin", "pw_admin")
-admin.connect()
-admin.close()
+if __name__ == "__main__":
+    admin = DataBaseConnect("itstime_db", "admin", "pw_admin")
+    admin.connect()
+    admin.insert_event("test_name", "2022-01-01", "18:00:00")
+    admin.fetch_events()
+    admin.close()
