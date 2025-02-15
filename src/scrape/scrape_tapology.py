@@ -22,7 +22,7 @@ class WebScraper:
         else:
             logging.error("Failed to retrieve the page")
 
-    def get_event_dict(self):
+    def get_event_data(self):
         """
         Calls request_html() and extracts the event name, event time, main card fighters,
         and location. This is stored as json file
@@ -42,17 +42,20 @@ class WebScraper:
                 event_name_tag.get_text(strip=True) if event_name_tag else "N/A"
             )
 
-            # Extract event time (Desktop version)
-            event_time_tag = event.find("span", class_="hidden md:inline")
-            self.event_time = (
-                event_time_tag.get_text(strip=True) if event_time_tag else "N/A"
-            )
-            self.convert_date()
-            event_info = {
-                "name": self.event_name,
-                "time": self.event_time,
-            }
-            self.event_data.append(event_info)
+            # Initialize a list to hold the event times
+            event_raw = []
+            event_raw.append(self.event_name)
+            # Find all the span elements with the given class
+            span_tags = event.find_all("span", class_="hidden md:inline")
+
+            # Loop through span tags and collect them
+            for span_tag in span_tags:
+                event_raw.append(span_tag.get_text(strip=True))
+
+            # Store all collected event times, if any
+            self.event_times = event_raw if event_raw else "N/A"
+
+            self.event_data.append(event_raw)
 
     def convert_date(self):
         """
@@ -73,5 +76,5 @@ class WebScraper:
 
 if __name__ == "__main__":
     fight_data = WebScraper()
-    fight_data.get_event_dict()
+    fight_data.get_event_data()
     print(fight_data.event_data)
