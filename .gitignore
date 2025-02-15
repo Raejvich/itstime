@@ -2,3 +2,5 @@ logs/
 *.log
 apache-venv/
 itstimevenv/
+__pycache__/
+*.pyc
