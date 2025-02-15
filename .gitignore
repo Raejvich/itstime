@@ -1,2 +1,4 @@
 logs/
 *.log
+apache-venv/
+itstimevenv/
