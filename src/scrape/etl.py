@@ -1,5 +1,6 @@
 from src.scrape.scrape_tapology import WebScraper
 from src.database.database import DataBaseConnect
+import json
 
 # Create web scraper object
 scraper = WebScraper()
@@ -8,7 +9,14 @@ scraper.get_event_data()
 # get structured data
 scraper.structure_data()
 
-admin = DataBaseConnect("itstime_db", "admin", "pw_admin")
+with open("db_credential.json", "r") as file:
+    db_credentials = json.load(file)
+
+admin = DataBaseConnect(
+    db_credentials["database"],
+    db_credentials["username"],
+    db_credentials["password"],
+)
 # connect to DB
 admin.connect()
 # iterate throug every event an insert into DB

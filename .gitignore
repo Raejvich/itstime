@@ -4,3 +4,4 @@ apache-venv/
 itstimevenv/
 __pycache__/
 *.pyc
+db_credentials.json
