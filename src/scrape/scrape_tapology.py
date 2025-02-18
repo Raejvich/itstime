@@ -9,7 +9,7 @@ class WebScraper:
         self.url = "https://www.tapology.com/fightcenter?group=ufc"
         self.event_data = []
         self.structured_event_data = []
-        self.event_time = None
+        self.event_date = None
         self.event_name = None
         self.event_location = None
         self.fights = []
@@ -63,7 +63,7 @@ class WebScraper:
         Converts date in string format to datetime object, can handle case when year is
         specified and when year is not specified(current year)
         """
-        date_str = self.event_time.split(",", 1)[1].strip()
+        date_str = self.event_date.split(",", 1)[1].strip()
         try:
             # Try parsing the date with the year
             date_obj = datetime.strptime(date_str, "%B %d, %Y, %I:%M %p ET")
@@ -72,7 +72,7 @@ class WebScraper:
             current_year = datetime.now().year
             date_obj = datetime.strptime(date_str, "%B %d, %I:%M %p ET")
             date_obj = date_obj.replace(year=current_year)
-        self.event_time = date_obj
+        self.event_date = date_obj
 
     def get_fights(self, event):
         self.fights = []
@@ -98,7 +98,7 @@ class WebScraper:
             # name is stored in self.event_name or self.event_data[-][0]
             self.event_name = event[0]
             # date is stored in self.event_data[-][1], self.convert_date() to get correct format
-            self.event_time = event[1]
+            self.event_date = event[1]
             self.convert_date()
             # location stored self.event_data[-][2]
             self.event_location = event[2]
@@ -107,7 +107,7 @@ class WebScraper:
             self.structured_event_data.append(
                 Event(
                     self.event_name,
-                    self.event_time,
+                    self.event_date,
                     self.event_location,
                     self.fights,
                     self.fighters,
@@ -119,13 +119,13 @@ class Event:
     def __init__(
         self,
         event_name: str,
-        event_time: datetime,
+        event_date: datetime,
         event_location: str,
         event_fights: list,
         event_fighters: list,
     ):
         self.event_name = event_name
-        self.event_time = event_time
+        self.event_date = event_date
         self.event_location = event_location
         self.event_fights = event_fights
         self.event_fighters = event_fighters
@@ -134,7 +134,7 @@ class Event:
         return (
             f"Event(\n"
             f"  event_name={self.event_name!r},\n"
-            f"  event_time={self.event_time!r},\n"
+            f"  event_time={self.event_date!r},\n"
             f"  event_location={self.event_location!r},\n"
             f"  event_fights={self.event_fights!r},\n"
             f"  event_fighters={self.event_fighters!r}\n"

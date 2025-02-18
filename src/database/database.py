@@ -4,7 +4,7 @@ from src.log_config import db_logger
 from psycopg2 import sql
 from psycopg2.extras import DictCursor
 from typing import List, Tuple, Any, Optional
-
+import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -60,9 +60,13 @@ class DataBaseConnect:
         """
         try:
             self.cursor.execute(query, params or ())
-            if query.strip().lower().startswith("select"):
+            if (
+                query.strip().lower().startswith("select")
+                or "returning" in query.lower()
+            ):
                 results = self.cursor.fetchall()
                 db_logger.info(f"Executed SELECT query: {query}")
+                self.conn.commit()
                 # Return results if it's a SELECT query
                 return results
             # Commit transaction for INSERT, UPDATE, DELETE
@@ -75,16 +79,29 @@ class DataBaseConnect:
             self.conn.rollback()
         return []
 
-    def insert_event(self, event_name: str, event_date: str, event_time: str):
+    def insert_event(self, event_name: str, event_date: datetime, event_location: str):
         """
         Inserts a new event into the database.
         """
         query = """
-        INSERT INTO events (event_name, event_date, event_time)
-        VALUES (%s, %s, %s);
+        INSERT INTO events (name, event_date, location)
+        VALUES (%s, %s, %s)
+        RETURNING id;
         """
-        self.execute_query(query, (event_name, event_date, event_time))
+        result = self.execute_query(query, (event_name, event_date, event_location))
         db_logger.info(f"Inserted event: {event_name} on {event_date}")
+        return result[0][0]
+
+    def insert_fight(self, event_id, fighter_1, fighter_2, fight_order):
+        """
+        Inserts fight data into database
+        """
+        query = """
+        INSERT INTO fights (event_id, fighter_1, fighter_2, fight_order)
+        VALUES (%s, %s, %s, %s)
+        """
+        self.execute_query(query, (event_id, fighter_1, fighter_2, fight_order))
+        db_logger.info(f"Inserted fight: {fight_order} in event {event_id}")
 
     def fetch_events(self) -> List[Tuple]:
         """
@@ -109,6 +126,8 @@ class DataBaseConnect:
 if __name__ == "__main__":
     admin = DataBaseConnect("itstime_db", "admin", "pw_admin")
     admin.connect()
-    admin.insert_event("test_name", "2022-01-01", "18:00:00")
+    event_date = datetime.datetime(2025, 4, 12, 19, 0, 0)
+    admin.insert_event("test_name", event_date, "New York")
+    admin.insert_fight(2, "gustav", "johansson", 1)
     admin.fetch_events()
     admin.close()
