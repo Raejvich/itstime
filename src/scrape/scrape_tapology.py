@@ -147,4 +147,4 @@ if __name__ == "__main__":
     fight_data.get_event_data()
     fight_data.structure_data()
 
-    print(fight_data.structured_event_data[-1])
+    print(fight_data.structured_event_data[1])
