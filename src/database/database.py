@@ -5,6 +5,7 @@ from psycopg2 import sql
 from psycopg2.extras import DictCursor
 from typing import List, Tuple, Any, Optional
 import datetime
+import json
 
 # Configure logging
 logging.basicConfig(
@@ -124,7 +125,15 @@ class DataBaseConnect:
 
 
 if __name__ == "__main__":
-    admin = DataBaseConnect("itstime_db", "admin", "pw_admin")
+
+    with open("db_credential.json", "r") as file:
+        db_credentials = json.load(file)
+
+    admin = DataBaseConnect(
+        db_credentials["database"],
+        db_credentials["username"],
+        db_credentials["password"],
+    )
     admin.connect()
     event_date = datetime.datetime(2025, 4, 12, 19, 0, 0)
     admin.insert_event("test_name", event_date, "New York")
