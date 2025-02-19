@@ -72,22 +72,25 @@
     <div class="header">
         <h1>ITSTIME</h1>
     </div>
+    {% for event in events %}
     <div class="event-container">
         <div class="event">
             <div class="left-image">
                 <img src="../images/berra.jpg" alt="fighter_1">
             </div>
             <div>
-                <h2>UFC 300</h2>
-                <p>April 1, 2025, 18:00</p>
-                <p>Las Vegas, NV</p>
+                <h2>{{event[1]}}</h2>
+                <p>{{event[2]}}</p>
+                <p>{{event[3]}}</p>
             </div>
 
             <div class="right-image">
                 <img src="../images/berra.jpg" alt="fighter_2">
             </div>
         </div>
+    
     </div>
+    {% endfor %}
 </body>
 
 </html>

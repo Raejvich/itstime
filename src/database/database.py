@@ -7,14 +7,6 @@ from typing import List, Tuple, Any, Optional
 import datetime
 import json
 
-# Configure logging
-logging.basicConfig(
-    filename=r"C:\Users\Gustav\repos\itstime\src\logs\database.log",  # Log file name
-    level=logging.INFO,  # Log level (INFO, WARNING, ERROR)
-    format="%(asctime)s - %(levelname)s - %(message)s",  # Log format
-    datefmt="%Y-%m-%d %H:%M:%S",  # Date format
-)
-
 
 class DataBaseConnect:
 
@@ -127,7 +119,7 @@ class DataBaseConnect:
 
 if __name__ == "__main__":
 
-    with open("db_credential.json", "r") as file:
+    with open(r"src\database\db_credentials.json", "r") as file:
         db_credentials = json.load(file)
 
     admin = DataBaseConnect(
@@ -136,3 +128,4 @@ if __name__ == "__main__":
         db_credentials["password"],
     )
     admin.connect()
+    print(admin.fetch_events())
