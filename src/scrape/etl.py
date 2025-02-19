@@ -9,7 +9,7 @@ scraper.get_event_data()
 # get structured data
 scraper.structure_data()
 
-with open("db_credential.json", "r") as file:
+with open("src\database\db_credentials.json", "r") as file:
     db_credentials = json.load(file)
 
 admin = DataBaseConnect(
@@ -19,7 +19,9 @@ admin = DataBaseConnect(
 )
 # connect to DB
 admin.connect()
-# iterate throug every event an insert into DB
+# delete current events
+admin.delete_events()
+# iterate through every event an insert into DB
 for event in scraper.structured_event_data:
     id = admin.insert_event(
         event_name=event.event_name,
@@ -30,3 +32,5 @@ for event in scraper.structured_event_data:
         admin.insert_fight(
             event_id=id, fighter_1=fight[0], fighter_2=fight[1], fight_order=order
         )
+# commit deletion and insert at the same time
+admin.conn.commit()

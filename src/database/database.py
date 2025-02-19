@@ -67,11 +67,7 @@ class DataBaseConnect:
             ):
                 results = self.cursor.fetchall()
                 db_logger.info(f"Executed SELECT query: {query}")
-                self.conn.commit()
-                # Return results if it's a SELECT query
                 return results
-            # Commit transaction for INSERT, UPDATE, DELETE
-            self.conn.commit()
             db_logger.info(f"Executed query: {query} with params {params}")
         except psycopg2.Error as e:
             db_logger.error(
@@ -113,6 +109,11 @@ class DataBaseConnect:
         db_logger.info(f"Fetched {len(results)} events from database.")
         return results
 
+    def delete_events(self):
+        query = "DELETE FROM events;"
+        self.execute_query(query)
+        db_logger.info(f"Deleted events from database.")
+
     def close(self):
         """
         Closes the database connection.
@@ -135,8 +136,3 @@ if __name__ == "__main__":
         db_credentials["password"],
     )
     admin.connect()
-    event_date = datetime.datetime(2025, 4, 12, 19, 0, 0)
-    admin.insert_event("test_name", event_date, "New York")
-    admin.insert_fight(2, "gustav", "johansson", 1)
-    admin.fetch_events()
-    admin.close()
