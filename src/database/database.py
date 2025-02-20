@@ -101,6 +101,26 @@ class DataBaseConnect:
         db_logger.info(f"Fetched {len(results)} events from database.")
         return results
 
+    def fetch_fights(self, event_id):
+        """
+        Retrieves all fights for a specific event from the database.
+        """
+        query = "SELECT * FROM fights WHERE event_id = %s;"
+        results = self.execute_query(query, (event_id,))  # Pass event_id as a parameter
+        db_logger.info(
+            f"Fetched {len(results)} fights from database for event_id: {event_id}"
+        )
+        return results
+
+    def fetch_event_ids(self):
+        """
+        Retrieves all events from the database.
+        """
+        query = "SELECT id FROM events;"
+        results = self.execute_query(query)
+        db_logger.info(f"Fetched {len(results)} event id's from database.")
+        return results
+
     def delete_events(self):
         query = "DELETE FROM events;"
         self.execute_query(query)
@@ -128,4 +148,11 @@ if __name__ == "__main__":
         db_credentials["password"],
     )
     admin.connect()
-    print(admin.fetch_events())
+    events = admin.fetch_events()
+    event_ids = admin.fetch_event_ids()
+    fight_dict = dict()
+    for event_id in event_ids:
+        fights = admin.fetch_fights(event_id[0])
+        fight_list = [fight[2:4] for fight in fights]
+        fight_dict[event_id[0]] = fight_list
+    admin.close()

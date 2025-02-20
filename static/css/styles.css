@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header with logo */
+.header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+/* Event section */
+.event-container {
+    padding: 20px;
+    margin: 20px auto;
+    width: 40%; /* Set width for the event container */
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.event-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin: 10px 0;
+}
+
+.event-container p {
+    font-size: 16px;
+    color: #555;
+}
+
+.fights-container {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+/* Each fight pair will be in a flex container */
+.fight-row {
+    display: flex;
+    justify-content: space-between; /* Space out the two fighters */
+    margin-bottom: 0px; /* Add space between each fight row */
+    border-top: 1px solid rgb(219, 218, 218);
+    align-items: center;
+    height: 100px;
+}
+
+.fight {
+    width: 50%; 
+    padding: 10px;
+    text-align: center;
+}
+
+.fight p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}

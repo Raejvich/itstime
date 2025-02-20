@@ -1,96 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title> title </title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Header with logo */
-        .header {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
-
-        /* Event section */
-        .event-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-        }
-
-        .event {
-            background-color: #f0f0f0;
-            padding: 15px;
-            text-align: center;
-            margin: 10px;
-            width: 550px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex; /* Use flexbox */
-            justify-content: space-between; /* Place images on each side */
-            align-items: center; /* Vertically center content */
-        }
-
-        .event h2 {
-            font-size: 24px;
-            color: #333;
-            flex: 1; /* Allow the title to take remaining space */
-        }
-
-        .event p {
-            font-size: 16px;
-            color: #555;
-            flex: 1; /* Allow the paragraph text to take remaining space */
-        }
-        .event img {
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
-        }
-        .event .left-image {
-            margin-right: 30px; /* Space between text and image */
-        }
-
-        .event .right-image {
-            margin-left: 30px; /* Space between text and image */
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC Event</title>
+    <link rel="stylesheet" href="static\css\styles.css">
 </head>
 <body>
     <div class="header">
         <h1>ITSTIME</h1>
     </div>
+
+    <!-- Main Event Box -->
     {% for event in events %}
     <div class="event-container">
-        <div class="event">
-            <div class="left-image">
-                <img src="../images/berra.jpg" alt="fighter_1">
-            </div>
-            <div>
-                <h2>{{event[1]}}</h2>
-                <p>{{event[2]}}</p>
-                <p>{{event[3]}}</p>
-            </div>
+        <h2>{{ event[1] }}</h2>  <!-- Event Name -->
+        <p>{{ event[2] }}</p>     <!-- Event Details -->
+        <p>{{ event[3] }}</p>     <!-- Event Date/Location -->
 
-            <div class="right-image">
-                <img src="../images/berra.jpg" alt="fighter_2">
+        <!-- Fights Section -->
+        <div class="fights-container">
+            {% for fight in fight_dict[event[0]] %}
+            <div class="fight-row">
+                <div class="fight">
+                    <p>{{ fight[0] }}</p>  <!-- Fighter 1 -->
+                </div>
+                <div class="fight">
+                    <p>{{ fight[1] }}</p>  <!-- Fighter 2 -->
+                </div>
             </div>
+            {% endfor %}
         </div>
-    
     </div>
     {% endfor %}
 </body>
-
 </html>
