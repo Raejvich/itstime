@@ -28,6 +28,21 @@ header {
     text-align: center;
 }
 
+.fighter-1 {
+    float:left;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
+.fighter-2 {
+    float: right;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+
+}
+
 .event-container h2 {
     font-size: 24px;
     color: #333;
