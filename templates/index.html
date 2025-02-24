@@ -14,12 +14,14 @@
     <!-- Main Event Box -->
     {% for event in events %}
     <div class="event-container">
-        <img class="fighter-1" src="https://pbs.twimg.com/profile_images/1610186636125700102/ggTMNAh0_400x400.jpg" alt="fighter 1 image">
-        <img class="fighter-2" src="https://pbs.twimg.com/profile_images/1610186636125700102/ggTMNAh0_400x400.jpg" alt="fighter 1 image">
-        <h2>{{ event[1] }}</h2>  <!-- Event Name -->
-        <p>{{ event[2] }}</p>     <!-- Event Details -->
-        <p>{{ event[3] }}</p>     <!-- Event Date/Location -->
-
+        <div class="event-information">
+            <img class="fighter-1" src="https://dmxg5wxfqgb4u.cloudfront.net/styles/event_fight_card_upper_body_of_standing_athlete/s3/image/ufc-fighter-container/69013/profile-galery/fullbodyleft-picture/cm-punk_515764_LeftFullBodyImage.png?VersionId=c1rm_KXGyKA1xBW1e661ay0SH22Zanqm&itok=gwqrcV3v">
+            <img class="fighter-2" src="https://dmxg5wxfqgb4u.cloudfront.net/styles/event_fight_card_upper_body_of_standing_athlete/s3/image/ufc-fighter-container/69013/profile-galery/fullbodyleft-picture/cm-punk_515764_LeftFullBodyImage.png?VersionId=c1rm_KXGyKA1xBW1e661ay0SH22Zanqm&itok=gwqrcV3v" alt="fighter 1 image">
+            <h2 class="event-name">{{ event[1] }}</h2>  <!-- Event Name -->
+            <p class="event-date">{{ event[2] }}</p>     <!-- Event Details -->
+            <p class="event-location">{{ event[3] }}</p>     <!-- Event Date/Location -->
+        </div>
+        
         <!-- Fights Section -->
         <div class="fights-container">
             {% for fight in fight_dict[event[0]] %}

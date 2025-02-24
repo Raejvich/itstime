@@ -21,7 +21,7 @@ header {
 .event-container {
     padding: 20px;
     margin: 20px auto;
-    width: 40%; /* Set width for the event container */
+    width: 600px; /* Set width for the event container */
     background-color: #f0f0f0;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,17 +29,21 @@ header {
 }
 
 .fighter-1 {
-    float:left;
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
+    grid-row: 1 / 4;
+    grid-column: 1;
+    width: 66px;
+    height: 200px;
+    justify-self: center;
+    align-self: center;
 }
 
 .fighter-2 {
-    float: right;
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
+    grid-row: 1 / 4;
+    grid-column: 3;
+    width: 66px;
+    height: 200px;
+    justify-self: center;
+    align-self: bottom;
 
 }
 
@@ -52,6 +56,23 @@ header {
 .event-container p {
     font-size: 16px;
     color: #555;
+}
+
+.event-information {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 2fr 1fr 1fr;
+}
+
+.event-date {
+    grid-row: 2;
+    grid-column: 2;
+
+}
+
+.event-location {
+    grid-row: 3;
+    grid-column: 2;
 }
 
 .fights-container {
