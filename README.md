@@ -2,7 +2,7 @@
 # UFC Event Web Scraper
 
 This project is a web scraper that extracts upcoming UFC events from **Tapology**, stores the data in a PostgreSQL database, and then serves the data through a web application. The web application converts the event times from Eastern Time (ET) to the user's local time.
-
+![Project GIF](static/images/animation.gif)
 ## Features
 
 - Web scrapes Tapology to retrieve upcoming UFC events.
