@@ -85,6 +85,7 @@ header {
 
 .event-container:hover {
     transform: scale(1.01);
+    cursor: pointer;
 }
 
 /* Each fight pair will be in a flex container */
