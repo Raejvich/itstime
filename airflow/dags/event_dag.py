@@ -43,13 +43,13 @@ def load_db():
 
 def connect_db(task_instance):
     event_list = task_instance.xcom_pull(task_ids="run_scraper")
-    with open("../src/database/db_credentials.json", "r") as file:
-        db_credentials = json.load(file)
-
+    DB_USER = os.getenv("DB_USER")
+    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    DB_NAME = os.getenv("DB_NAME")
     admin = DataBaseConnect(
-        db_credentials["database"],
-        db_credentials["username"],
-        db_credentials["password"],
+        DB_NAME,
+        DB_USER,
+        DB_PASSWORD,
         "host.docker.internal",
     )
     # connect to DB
