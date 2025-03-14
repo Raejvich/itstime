@@ -32,7 +32,7 @@ class WebScraper:
         and location. This is stored as json file
         """
         soup = self.request_html()
-        # Find all event containers (parent divs that hold event names and times)
+        # Find all event containers
         event_containers = soup.find_all(
             "div", attrs={"data-controller": "bout-toggler"}
         )
@@ -152,8 +152,4 @@ class Event:
 
 
 if __name__ == "__main__":
-    fight_data = WebScraper()
-    fight_data.get_event_data()
-    fight_data.structure_data()
-
-    print(fight_data.structured_event_data[1])
+    pass
