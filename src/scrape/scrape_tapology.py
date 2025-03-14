@@ -104,15 +104,14 @@ class WebScraper:
             self.event_location = event[2]
             # fights use vs. as identifier, make function for cleaning
             self.get_fights(event[1:])
-            self.structured_event_data.append(
-                Event(
-                    self.event_name,
-                    self.event_date,
-                    self.event_location,
-                    self.fights,
-                    self.fighters,
-                )
+            event_obj = Event(
+                self.event_name,
+                self.event_date,
+                self.event_location,
+                self.fights,
+                self.fighters,
             )
+            self.structured_event_data.append(event_obj.return_json())
 
 
 class Event:
@@ -140,6 +139,16 @@ class Event:
             f"  event_fighters={self.event_fighters!r}\n"
             f")"
         )
+
+    def return_json(self):
+        event_dict = {
+            "event_name": self.event_name,
+            "event_date": self.event_date,
+            "event_location": self.event_location,
+            "event_fights": self.event_fights,
+            "event_fighters": self.event_fighters,
+        }
+        return event_dict
 
 
 if __name__ == "__main__":

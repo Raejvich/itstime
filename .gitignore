@@ -6,14 +6,13 @@ __pycache__/
 *.pyc
 db_credentials.json
 
-
 # Airflow specific
 /airflow/.airflow/*
 /airflow/airflow.cfg
 /airflow/logs/
 /airflow/airflow-webserver.pid  
 /airflow/airflow.db  
-/airflow/standalone_admin_password.txt
+/airflow/standalone_admin_password.txt 
 /airflow/webserver_config.py  
 
 /# Temporary and cache files
@@ -23,9 +22,6 @@ __pycache__/
 *.pyd
 .Python
 
-# Virtual environment
-/venv/
-/apache-venv/
 
 # Docker files
 **/docker-compose.override.yml

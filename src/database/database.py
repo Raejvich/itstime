@@ -1,7 +1,5 @@
 import psycopg2
 import logging
-from src.log_config import db_logger
-from psycopg2 import sql
 from psycopg2.extras import DictCursor
 from typing import List, Tuple, Any, Optional
 import datetime
@@ -37,9 +35,9 @@ class DataBaseConnect:
             )
             # Enables dictionary-like query results
             self.cursor = self.conn.cursor(cursor_factory=DictCursor)
-            db_logger.info("Connecter to database successfully")
+            logging.info("Connecter to database successfully")
         except psycopg2.Error as e:
-            db_logger.error(f"Error connecting to database: {e}")
+            logging.error(f"Error connecting to database: {e}")
 
     def execute_query(
         self, query: str, params: Optional[Tuple[Any, ...]] = None
@@ -58,11 +56,11 @@ class DataBaseConnect:
                 or "returning" in query.lower()
             ):
                 results = self.cursor.fetchall()
-                db_logger.info(f"Executed SELECT query: {query}")
+                logging.info(f"Executed SELECT query: {query}")
                 return results
-            db_logger.info(f"Executed query: {query} with params {params}")
+            logging.info(f"Executed query: {query} with params {params}")
         except psycopg2.Error as e:
-            db_logger.error(
+            logging.error(
                 f"Error executing query: {e} | Query: {query} | Params: {params}"
             )
             self.conn.rollback()
@@ -78,7 +76,7 @@ class DataBaseConnect:
         RETURNING id;
         """
         result = self.execute_query(query, (event_name, event_date, event_location))
-        db_logger.info(f"Inserted event: {event_name} on {event_date}")
+        logging.info(f"Inserted event: {event_name} on {event_date}")
         return result[0][0]
 
     def insert_fight(self, event_id, fighter_1, fighter_2, fight_order):
@@ -90,7 +88,7 @@ class DataBaseConnect:
         VALUES (%s, %s, %s, %s)
         """
         self.execute_query(query, (event_id, fighter_1, fighter_2, fight_order))
-        db_logger.info(f"Inserted fight: {fight_order} in event {event_id}")
+        logging.info(f"Inserted fight: {fight_order} in event {event_id}")
 
     def fetch_events(self) -> List[Tuple]:
         """
@@ -98,7 +96,7 @@ class DataBaseConnect:
         """
         query = "SELECT * FROM events;"
         results = self.execute_query(query)
-        db_logger.info(f"Fetched {len(results)} events from database.")
+        logging.info(f"Fetched {len(results)} events from database.")
         return results
 
     def fetch_fights(self, event_id):
@@ -107,7 +105,7 @@ class DataBaseConnect:
         """
         query = "SELECT * FROM fights WHERE event_id = %s;"
         results = self.execute_query(query, (event_id,))  # Pass event_id as a parameter
-        db_logger.info(
+        logging.info(
             f"Fetched {len(results)} fights from database for event_id: {event_id}"
         )
         return results
@@ -118,13 +116,13 @@ class DataBaseConnect:
         """
         query = "SELECT id FROM events;"
         results = self.execute_query(query)
-        db_logger.info(f"Fetched {len(results)} event id's from database.")
+        logging.info(f"Fetched {len(results)} event id's from database.")
         return results
 
     def delete_events(self):
         query = "DELETE FROM events;"
         self.execute_query(query)
-        db_logger.info(f"Deleted events from database.")
+        logging.info(f"Deleted events from database.")
 
     def close(self):
         """
@@ -134,7 +132,7 @@ class DataBaseConnect:
             self.cursor.close()
         if self.conn:
             self.conn.close()
-            db_logger.info("Database connection closed.")
+            logging.info("Database connection closed.")
 
 
 if __name__ == "__main__":
