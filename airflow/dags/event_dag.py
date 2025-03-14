@@ -73,7 +73,7 @@ def connect_db(task_instance):
 
 
 with DAG(
-    "test_dag", default_args=default_args, schedule="@weekly", catchup=False
+    "event_dag", default_args=default_args, schedule="@weekly", catchup=False
 ) as dag:
 
     scrape = PythonOperator(
