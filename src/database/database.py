@@ -1,6 +1,9 @@
 import psycopg2
 import logging
+
+
 from psycopg2 import sql
+
 from psycopg2.extras import DictCursor
 from typing import List, Tuple, Any, Optional
 import datetime
@@ -102,7 +105,11 @@ class DataBaseConnect:
         Retrieves all fights for a specific event from the database.
         """
         query = "SELECT * FROM fights WHERE event_id = %s;"
+
+        results = self.execute_query(query, (event_id,))  # Pass event_id as a parameter
+
         results = self.execute_query(query, (event_id,))
+
         logging.info(
             f"Fetched {len(results)} fights from database for event_id: {event_id}"
         )
