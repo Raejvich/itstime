@@ -1,7 +1,12 @@
+import sys
+import os
+
+sys.path.append("/opt/src")
 from flask import Flask, render_template
 import json
-from src.database.database import DataBaseConnect
+from database.database import DataBaseConnect
 import datetime
+
 
 app = Flask(__name__)
 
@@ -9,13 +14,15 @@ app = Flask(__name__)
 @app.route("/")
 def home():
 
-    with open("src/database/db_credentials.json", "r") as file:
-        db_credentials = json.load(file)
-
+    DB_USER = os.getenv("DB_USER")
+    DB_PASSWORD = os.getenv("DB_PASSWORD")
+    DB_NAME = os.getenv("DB_NAME")
+    DB_HOST = os.getenv("DB_HOST")
     admin = DataBaseConnect(
-        db_credentials["database"],
-        db_credentials["username"],
-        db_credentials["password"],
+        DB_NAME,
+        DB_USER,
+        DB_PASSWORD,
+        DB_HOST,
     )
     admin.connect()
     events = admin.fetch_events()
@@ -32,4 +39,4 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    app.run(host="0.0.0.0", debug=True, use_reloader=False)

@@ -9,7 +9,7 @@ scraper.get_event_data()
 # get structured data
 scraper.structure_data()
 
-with open("src\database\db_credentials.json", "r") as file:
+with open("src/database/db_credentials.json", "r") as file:
     db_credentials = json.load(file)
 
 admin = DataBaseConnect(
@@ -34,3 +34,4 @@ for event in scraper.structured_event_data:
         )
 # commit deletion and insert at the same time
 admin.conn.commit()
+admin.close()

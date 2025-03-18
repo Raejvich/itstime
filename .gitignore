@@ -5,3 +5,51 @@ itstimevenv/
 __pycache__/
 *.pyc
 db_credentials.json
+
+# Airflow specific
+/airflow/.airflow/*
+/airflow/airflow.cfg
+/airflow/logs/
+/airflow/airflow-webserver.pid  
+/airflow/airflow.db  
+/airflow/standalone_admin_password.txt 
+/airflow/webserver_config.py  
+
+/# Temporary and cache files
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+
+
+# Docker files
+**/docker-compose.override.yml
+**/Dockerfile
+**/docker-compose.yml
+
+# Local configurations, IDE or editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Node and yarn
+node_modules/
+yarn.lock
+
+# System-specific files
+.DS_Store
+Thumbs.db
+*.bak
+*.log
+
+# Python related
+*.egg-info/
+*.dist-info/
+.eggs/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
