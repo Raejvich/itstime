@@ -1,8 +1,6 @@
 import sys
 import os
 
-# List files in /app or /opt/src to verify where the code is located
-print("Files in /app:", os.listdir("/app"))
 sys.path.append("/opt/src")
 from flask import Flask, render_template
 import json
@@ -20,6 +18,10 @@ def home():
     DB_PASSWORD = os.getenv("DB_PASSWORD")
     DB_NAME = os.getenv("DB_NAME")
     DB_HOST = os.getenv("DB_HOST")
+    print(DB_USER)
+    print(DB_PASSWORD)
+    print(DB_NAME)
+    print(DB_HOST)
     admin = DataBaseConnect(
         DB_NAME,
         DB_USER,
