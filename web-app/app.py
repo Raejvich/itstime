@@ -1,6 +1,8 @@
 import sys
 import os
 
+# List files in /app or /opt/src to verify where the code is located
+print("Files in /app:", os.listdir("/app"))
 sys.path.append("/opt/src")
 from flask import Flask, render_template
 import json
