@@ -1,0 +1,18 @@
+FROM python:3.13
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /app/
+
+# Expose the port the app will run on (e.g., Flask default is 5000)
+EXPOSE 5000
+
+# Set environment variable (e.g., Flask app entry point)
+ENV FLASK_APP=app.py
+
+# Command to run the web app
+CMD ["python", "app.py"]
