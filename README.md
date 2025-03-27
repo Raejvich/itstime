@@ -12,6 +12,10 @@ This project is a web scraper that extracts upcoming UFC events from **Tapology*
 - Serves event data via a **Flask** web application.
 - JavaScript dynamically converts event times from ET to the user's local time.
 
+## Live Demo
+
+Check out the live application here: [itstime](https://itstime-production.up.railway.app/)
+
 ## Technologies Used
 
 - **Python**: For web scraping and data manipulation.
